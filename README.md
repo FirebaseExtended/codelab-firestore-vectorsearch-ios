@@ -1,6 +1,6 @@
-# AI Extensions Codelab
+# Firestore Vector Search Codelab
 
-This is the codelab code for Gemini API extensions
+This is the codelab code for Firestore Vector Search on iOS
 
 ## Source Code Headers
 
