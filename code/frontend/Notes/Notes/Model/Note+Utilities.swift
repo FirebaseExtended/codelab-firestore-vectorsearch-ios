@@ -24,7 +24,7 @@ extension Note {
   }
 
   var body: String {
-    lines.dropFirst().joined(separator: "\n").trimmingCharacters(in: .whitespaces)
+    lines.dropFirst().joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
   }
 
   var lines: [String] {

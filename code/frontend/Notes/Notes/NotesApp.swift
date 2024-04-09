@@ -21,17 +21,15 @@ import SwiftUI
 @main
 struct NotesApp: App {
   @State var notesRepository = NotesRepository()
-
+  
   init() {
     notesRepository.notes = Note.mocks
   }
-
+  
   var body: some Scene {
     WindowGroup {
-      NavigationStack {
-        NotesListScreen()
-          .environment(notesRepository)
-      }
+      NotesListScreen()
+        .environment(notesRepository)
     }
   }
 }

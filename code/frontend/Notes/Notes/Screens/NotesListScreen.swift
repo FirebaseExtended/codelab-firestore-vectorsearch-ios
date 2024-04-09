@@ -20,33 +20,46 @@ import SwiftUI
 
 struct NotesListScreen: View {
   @Environment(NotesRepository.self) var notesRepository
+  @State var path = NavigationPath()
 
   var body: some View {
     @Bindable var repository = notesRepository
 
-    List($repository.notes) { $note in
-      NavigationLink {
-        NoteEditScreen(note: $note)
-          .environment(notesRepository)
-      } label: {
-        NoteRowView(note: note)
+    NavigationStack(path: $path) {
+      List(repository.notes) { note in
+        NavigationLink(value: note) {
+          NoteRowView(note: note)
+        }
+        .swipeActions {
+          Button(role: .destructive, action: { deleteNote(note: note) }) {
+            Label("Delete", systemImage: "trash")
+          }
+        }
       }
-    }
-    .navigationTitle("Notes")
-    .toolbar {
-      ToolbarItem(placement: .bottomBar) {
-        Spacer()
+      .navigationTitle("Notes")
+      .navigationDestination(for: Note.self) { note in
+        NoteEditScreen(note: note)
       }
-      ToolbarItem(placement: .bottomBar) {
-        Button(action: createNote) {
-          Image(systemName: "square.and.pencil")
+      .toolbar {
+        ToolbarItem(placement: .bottomBar) {
+          Spacer()
+        }
+        ToolbarItem(placement: .bottomBar) {
+          Button(action: createNote) {
+            Image(systemName: "square.and.pencil")
+          }
         }
       }
     }
   }
 
+  private func deleteNote(note: Note) {
+    notesRepository.delete(note: note)
+  }
+
   private func createNote() {
     let note = notesRepository.createNote()
+    path.append(note)
   }
 }
 

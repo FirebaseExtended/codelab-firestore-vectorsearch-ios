@@ -29,7 +29,11 @@ import Observation
   }
 
   func update(note: Note) {
-    guard let index = notes.firstIndex(of: note) else { return }
+    guard let index = notes.firstIndex(where: { $0.id == note.id }) else { return }
     notes[index] = note
+  }
+
+  func delete(note: Note) {
+    notes.removeAll { $0.id == note.id }
   }
 }

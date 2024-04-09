@@ -18,14 +18,26 @@
 
 import SwiftUI
 
+@Observable class NoteEditViewModel {
+  var note: Note
+
+  init(note: Note) {
+    self.note = note
+  }
+}
+
 struct NoteEditScreen: View {
-  @Binding var note: Note
+  @State var viewModel: NoteEditViewModel
   @Environment(NotesRepository.self) var noteRepository
 
+  init(note: Note) {
+    self.viewModel = NoteEditViewModel(note: note)
+  }
+
   var body: some View {
-    TextEditor(text: $note.text)
+    TextEditor(text: $viewModel.note.text)
       .onDisappear {
-        noteRepository.update(note: note)
+        noteRepository.update(note: viewModel.note)
       }
   }
 }
@@ -33,6 +45,6 @@ struct NoteEditScreen: View {
 #Preview {
   NavigationStack {
     @State var note = Note.mock
-    NoteEditScreen(note: $note)
+    NoteEditScreen(note: note)
   }
 }
