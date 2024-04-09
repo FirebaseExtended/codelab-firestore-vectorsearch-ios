@@ -18,48 +18,41 @@
 
 import SwiftUI
 
-extension Note {
-  var title: String {
-    lines[0]
-  }
-
-  var body: String {
-    lines.dropFirst().joined(separator: "\n").trimmingCharacters(in: .whitespaces)
-  }
-
-  var lines: [String] {
-    self.text.components(separatedBy: "\n")
-  }
-}
-
 struct NotesListScreen: View {
   @Environment(NotesRepository.self) var notesRepository
 
   var body: some View {
     @Bindable var repository = notesRepository
-    
+
     List($repository.notes) { $note in
       NavigationLink {
         NoteEditScreen(note: $note)
       } label: {
-        VStack(alignment: .leading) {
-          Text(note.title)
-            .font(.headline)
-            .lineLimit(1)
-          Text(note.body)
-            .font(.body)
-            .lineLimit(2)
-        }
+        NoteRowView(note: note)
       }
-
     }
     .navigationTitle("Notes")
+    .toolbar {
+      ToolbarItem(placement: .bottomBar) {
+        Spacer()
+      }
+      ToolbarItem(placement: .bottomBar) {
+        Button(action: { }) {
+          Image(systemName: "square.and.pencil")
+        }
+      }
+    }
   }
 }
 
 #Preview {
   NavigationStack {
-    @State var notes = Note.mocks
+    @State var notesRepository = NotesRepository()
     NotesListScreen()
+      .environment(notesRepository)
+      .onAppear {
+        notesRepository.notes = Note.mocks
+      }
   }
 }
+

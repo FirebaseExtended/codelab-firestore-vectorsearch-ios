@@ -15,6 +15,8 @@
 		88CCEAC92BC40B6600829826 /* NotesListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCEAC82BC40B6600829826 /* NotesListScreen.swift */; };
 		88CCEACB2BC4112600829826 /* NoteEditScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCEACA2BC4112600829826 /* NoteEditScreen.swift */; };
 		88CCEAD12BC55F0700829826 /* NotesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCEAD02BC55F0700829826 /* NotesRepository.swift */; };
+		88CCEAD32BC563AF00829826 /* Note+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCEAD22BC563AF00829826 /* Note+Utilities.swift */; };
+		88CCEAD62BC56EF400829826 /* NoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCEAD52BC56EF400829826 /* NoteRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		88CCEAC82BC40B6600829826 /* NotesListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListScreen.swift; sourceTree = "<group>"; };
 		88CCEACA2BC4112600829826 /* NoteEditScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditScreen.swift; sourceTree = "<group>"; };
 		88CCEAD02BC55F0700829826 /* NotesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesRepository.swift; sourceTree = "<group>"; };
+		88CCEAD22BC563AF00829826 /* Note+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+Utilities.swift"; sourceTree = "<group>"; };
+		88CCEAD52BC56EF400829826 /* NoteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,7 @@
 		88CCEAB32BC408A600829826 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				88CCEAD42BC56EE300829826 /* Views */,
 				88CCEACF2BC55ECF00829826 /* Services */,
 				88CCEAC22BC408D100829826 /* Model */,
 				88CCEAC72BC40B4A00829826 /* Screens */,
@@ -82,6 +87,7 @@
 			children = (
 				88CCEAC32BC408E300829826 /* Note.swift */,
 				88CCEAC52BC40B2500829826 /* Note+Mocks.swift */,
+				88CCEAD22BC563AF00829826 /* Note+Utilities.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -101,6 +107,14 @@
 				88CCEAD02BC55F0700829826 /* NotesRepository.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		88CCEAD42BC56EE300829826 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				88CCEAD52BC56EF400829826 /* NoteRowView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,10 +187,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88CCEAD32BC563AF00829826 /* Note+Utilities.swift in Sources */,
 				88CCEAC62BC40B2500829826 /* Note+Mocks.swift in Sources */,
 				88CCEAB52BC408A600829826 /* NotesApp.swift in Sources */,
 				88CCEACB2BC4112600829826 /* NoteEditScreen.swift in Sources */,
 				88CCEAC42BC408E300829826 /* Note.swift in Sources */,
+				88CCEAD62BC56EF400829826 /* NoteRowView.swift in Sources */,
 				88CCEAC92BC40B6600829826 /* NotesListScreen.swift in Sources */,
 				88CCEAD12BC55F0700829826 /* NotesRepository.swift in Sources */,
 			);
