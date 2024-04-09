@@ -33,10 +33,12 @@ extension Note {
 }
 
 struct NotesListScreen: View {
-  @Binding var notes: [Note]
+  @Environment(NotesRepository.self) var notesRepository
 
   var body: some View {
-    List($notes) { $note in
+    @Bindable var repository = notesRepository
+    
+    List($repository.notes) { $note in
       NavigationLink {
         NoteEditScreen(note: $note)
       } label: {
@@ -58,6 +60,6 @@ struct NotesListScreen: View {
 #Preview {
   NavigationStack {
     @State var notes = Note.mocks
-    NotesListScreen(notes: $notes)
+    NotesListScreen()
   }
 }

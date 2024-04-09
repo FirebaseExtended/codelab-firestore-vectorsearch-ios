@@ -1,8 +1,8 @@
 //
-// NotesApp.swift
+// NotesRepository.swift
 // Notes
 //
-// Created by Peter Friese on 08.04.24.
+// Created by Peter Friese on 09.04.24.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,22 +16,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import SwiftUI
+import Foundation
+import Observation
 
-@main
-struct NotesApp: App {
-  @State var notesRepository = NotesRepository()
-
-  init() {
-    notesRepository.notes = Note.mocks
-  }
-
-  var body: some Scene {
-    WindowGroup {
-      NavigationStack {
-        NotesListScreen()
-          .environment(notesRepository)
-      }
-    }
-  }
+@Observable class NotesRepository {
+  var notes: [Note] = [Note]()
 }
