@@ -18,7 +18,7 @@
 
 import SwiftUI
 
-@Observable class NoteEditViewModel {
+@Observable fileprivate class NoteEditViewModel {
   var note: Note
 
   init(note: Note) {
@@ -27,8 +27,8 @@ import SwiftUI
 }
 
 struct NoteEditScreen: View {
-  @State var viewModel: NoteEditViewModel
-  @Environment(NotesRepository.self) var noteRepository
+  @Environment(NotesRepository.self) private var noteRepository
+  @State fileprivate var viewModel: NoteEditViewModel
 
   init(note: Note) {
     self.viewModel = NoteEditViewModel(note: note)

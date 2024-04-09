@@ -20,6 +20,7 @@ import SwiftUI
 
 struct NoteRowView: View {
   var note: Note
+  
   var body: some View {
     VStack(alignment: .leading) {
       Text(note.title)

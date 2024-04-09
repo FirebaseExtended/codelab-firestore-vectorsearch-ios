@@ -19,8 +19,8 @@
 import SwiftUI
 
 struct NotesListScreen: View {
-  @Environment(NotesRepository.self) var notesRepository
-  @State var path = NavigationPath()
+  @Environment(NotesRepository.self) private var notesRepository
+  @State private var path = NavigationPath()
 
   var body: some View {
     @Bindable var repository = notesRepository

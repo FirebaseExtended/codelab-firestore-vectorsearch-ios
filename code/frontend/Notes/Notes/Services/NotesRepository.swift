@@ -23,7 +23,7 @@ import Observation
   var notes: [Note] = [Note]()
 
   func createNote() -> Note {
-    let note = Note(text: "")
+    let note = Note()
     notes.insert(note, at: 0)
     return note
   }
