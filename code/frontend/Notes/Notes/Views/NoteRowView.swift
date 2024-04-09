@@ -18,9 +18,11 @@
 
 import SwiftUI
 
-struct NoteRowView: View {
+struct NoteRowView {
   var note: Note
-  
+}
+
+extension NoteRowView: View {
   var body: some View {
     VStack(alignment: .leading) {
       Text(note.title)

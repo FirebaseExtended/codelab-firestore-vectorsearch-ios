@@ -18,10 +18,21 @@
 
 import SwiftUI
 
-struct NotesListScreen: View {
+struct NotesListScreen {
   @Environment(NotesRepository.self) private var notesRepository
   @State private var path = NavigationPath()
 
+  private func deleteNote(note: Note) {
+    notesRepository.delete(note: note)
+  }
+
+  private func createNote() {
+    let note = notesRepository.createNote()
+    path.append(note)
+  }
+}
+
+extension NotesListScreen: View {
   var body: some View {
     @Bindable var repository = notesRepository
 
@@ -51,15 +62,6 @@ struct NotesListScreen: View {
         }
       }
     }
-  }
-
-  private func deleteNote(note: Note) {
-    notesRepository.delete(note: note)
-  }
-
-  private func createNote() {
-    let note = notesRepository.createNote()
-    path.append(note)
   }
 }
 

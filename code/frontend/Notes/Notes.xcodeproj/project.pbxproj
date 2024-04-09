@@ -63,9 +63,9 @@
 		88CCEAB32BC408A600829826 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
-				88CCEAD42BC56EE300829826 /* Views */,
 				88CCEACF2BC55ECF00829826 /* Services */,
 				88CCEAC22BC408D100829826 /* Model */,
+				88CCEAD42BC56EE300829826 /* Views */,
 				88CCEAC72BC40B4A00829826 /* Screens */,
 				88CCEAB42BC408A600829826 /* NotesApp.swift */,
 				88CCEAB82BC408A800829826 /* Assets.xcassets */,
