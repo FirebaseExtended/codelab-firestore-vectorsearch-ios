@@ -20,8 +20,13 @@ import SwiftUI
 
 struct NoteEditScreen: View {
   @Binding var note: Note
+  @Environment(NotesRepository.self) var noteRepository
+
   var body: some View {
     TextEditor(text: $note.text)
+      .onDisappear {
+        noteRepository.update(note: note)
+      }
   }
 }
 

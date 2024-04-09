@@ -21,4 +21,15 @@ import Observation
 
 @Observable class NotesRepository {
   var notes: [Note] = [Note]()
+
+  func createNote() -> Note {
+    let note = Note(text: "")
+    notes.insert(note, at: 0)
+    return note
+  }
+
+  func update(note: Note) {
+    guard let index = notes.firstIndex(of: note) else { return }
+    notes[index] = note
+  }
 }

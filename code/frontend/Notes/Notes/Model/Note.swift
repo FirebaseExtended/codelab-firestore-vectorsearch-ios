@@ -19,6 +19,6 @@
 import Foundation
 
 struct Note: Identifiable, Hashable {
-  var id: UUID = UUID()
+  var id: String = UUID().uuidString
   var text: String
 }

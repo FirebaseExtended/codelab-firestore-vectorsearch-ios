@@ -27,6 +27,7 @@ struct NotesListScreen: View {
     List($repository.notes) { $note in
       NavigationLink {
         NoteEditScreen(note: $note)
+          .environment(notesRepository)
       } label: {
         NoteRowView(note: note)
       }
@@ -37,11 +38,15 @@ struct NotesListScreen: View {
         Spacer()
       }
       ToolbarItem(placement: .bottomBar) {
-        Button(action: { }) {
+        Button(action: createNote) {
           Image(systemName: "square.and.pencil")
         }
       }
     }
+  }
+
+  private func createNote() {
+    let note = notesRepository.createNote()
   }
 }
 
