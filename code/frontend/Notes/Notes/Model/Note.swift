@@ -17,8 +17,9 @@
 // limitations under the License.
 
 import Foundation
+import FirebaseFirestore
 
-struct Note: Identifiable, Hashable {
-  let id: String = UUID().uuidString
+struct Note: Identifiable, Hashable, Codable {
+  @DocumentID var id: String?
   var text: String = ""
 }

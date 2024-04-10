@@ -18,22 +18,61 @@
 
 import Foundation
 import Observation
+import FirebaseFirestore
 
 @Observable class NotesRepository {
   var notes: [Note] = [Note]()
 
-  func createNote() -> Note {
-    let note = Note()
-    notes.insert(note, at: 0)
+  @ObservationIgnored
+  private lazy var db: Firestore = Firestore.firestore()
+  private let notesCollection = "notes"
+
+  @ObservationIgnored
+  private var listenerRegistration: ListenerRegistration?
+}
+
+extension NotesRepository {
+  func createNote() async throws -> Note {
+    var note = Note()
+
+    let ref = try? db.collection(notesCollection).addDocument(from: note)
+    note.id = ref?.documentID
+
+//    if let documentId = ref?.documentID {
+//      return try await db.collection(notesCollection).document(documentId).getDocument(as: Note.self)
+//    }
+
     return note
   }
 
   func update(note: Note) {
-    guard let index = notes.firstIndex(where: { $0.id == note.id }) else { return }
-    notes[index] = note
+    if let documentID = note.id {
+      try? db.collection(notesCollection).document(documentID).setData(from: note, merge: true)
+    }
   }
 
   func delete(note: Note) {
-    notes.removeAll { $0.id == note.id }
+    if let documentID = note.id {
+      db.collection(notesCollection).document(documentID).delete()
+    }
+  }
+
+  func unsubscribe() {
+    if listenerRegistration != nil {
+      listenerRegistration?.remove()
+      listenerRegistration = nil
+    }
+  }
+
+  func subscribe() {
+    if listenerRegistration == nil {
+      listenerRegistration = db.collection(notesCollection)
+        .addSnapshotListener { [weak self] querySnapshot, error in
+          guard let documents = querySnapshot?.documents else { return }
+          self?.notes = documents.compactMap { queryDocumentSnapshot in
+            try? queryDocumentSnapshot.data(as: Note.self)
+          }
+        }
+    }
   }
 }

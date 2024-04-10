@@ -29,13 +29,13 @@ import SwiftUI
 struct NoteEditScreen {
   @Environment(NotesRepository.self) private var noteRepository
   @State fileprivate var viewModel: NoteEditViewModel
-  
-  init(note: Note) {
-    self.viewModel = NoteEditViewModel(note: note)
-  }
 }
 
 extension NoteEditScreen: View {
+  init(note: Note) {
+    self.viewModel = NoteEditViewModel(note: note)
+  }
+
   var body: some View {
     TextEditor(text: $viewModel.note.text)
       .onDisappear {

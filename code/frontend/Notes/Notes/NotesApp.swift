@@ -17,13 +17,15 @@
 // limitations under the License.
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct NotesApp: App {
   @State var notesRepository = NotesRepository()
   
   init() {
-    notesRepository.notes = Note.mocks
+    FirebaseApp.configure()
+    notesRepository.subscribe()
   }
   
   var body: some Scene {

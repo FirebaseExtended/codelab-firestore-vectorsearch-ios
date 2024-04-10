@@ -27,8 +27,10 @@ struct NotesListScreen {
   }
 
   private func createNote() {
-    let note = notesRepository.createNote()
-    path.append(note)
+    Task {
+      let note = try await notesRepository.createNote()
+      path.append(note)
+    }
   }
 }
 
