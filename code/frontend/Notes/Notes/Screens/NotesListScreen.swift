@@ -18,6 +18,7 @@ import SwiftUI
 struct NotesListScreen {
   @Environment(NotesRepository.self) private var notesRepository
   @State private var path = NavigationPath()
+  @State private var searchTerm = ""
 
   private func deleteNote(note: Note) {
     notesRepository.delete(note: note)
@@ -45,6 +46,10 @@ extension NotesListScreen: View {
             Label("Delete", systemImage: "trash")
           }
         }
+      }
+      .searchable(text: $searchTerm, prompt: "Search")
+      .task(id: searchTerm, nanoseconds: 600_000_000) {
+        await notesRepository.semanticSearch(searchTerm: searchTerm)
       }
       .navigationTitle("Notes")
       .navigationDestination(for: Note.self) { note in

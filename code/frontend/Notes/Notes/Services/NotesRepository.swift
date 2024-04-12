@@ -16,13 +16,30 @@
 import Foundation
 import Observation
 import FirebaseFirestore
+import FirebaseFunctions
+
+private struct QueryRequest: Codable {
+  var query: String
+  var limit: Int?
+}
+
+private struct QueryResponse: Codable {
+  var ids: [String]
+}
 
 @Observable class NotesRepository {
+  private var allNotes: [Note] = [Note]()
   var notes: [Note] = [Note]()
 
   @ObservationIgnored
   private lazy var db: Firestore = Firestore.firestore()
   private let notesCollection = "notes"
+
+  @ObservationIgnored
+  private lazy var functions: Functions = Functions.functions()
+
+  @ObservationIgnored
+  private lazy var vectorSearchQueryCallable: Callable<QueryRequest, QueryResponse> = functions.httpsCallable("ext-firestore-vector-search-queryCallable")
 
   @ObservationIgnored
   private var listenerRegistration: ListenerRegistration?
@@ -34,10 +51,6 @@ extension NotesRepository {
 
     let ref = try? db.collection(notesCollection).addDocument(from: note)
     note.id = ref?.documentID
-
-//    if let documentId = ref?.documentID {
-//      return try await db.collection(notesCollection).document(documentId).getDocument(as: Note.self)
-//    }
 
     return note
   }
@@ -54,22 +67,50 @@ extension NotesRepository {
     }
   }
 
+  func subscribe() {
+    if listenerRegistration == nil {
+      listenerRegistration = db.collection(notesCollection)
+        .addSnapshotListener { [weak self] querySnapshot, error in
+          guard let documents = querySnapshot?.documents else { return }
+          self?.allNotes = documents.compactMap { queryDocumentSnapshot in
+            try? queryDocumentSnapshot.data(as: Note.self)
+          }
+          self?.notes = self?.allNotes ?? []
+        }
+    }
+  }
+
   func unsubscribe() {
     if listenerRegistration != nil {
       listenerRegistration?.remove()
       listenerRegistration = nil
     }
   }
+}
 
-  func subscribe() {
-    if listenerRegistration == nil {
-      listenerRegistration = db.collection(notesCollection)
-        .addSnapshotListener { [weak self] querySnapshot, error in
-          guard let documents = querySnapshot?.documents else { return }
-          self?.notes = documents.compactMap { queryDocumentSnapshot in
-            try? queryDocumentSnapshot.data(as: Note.self)
-          }
-        }
+extension NotesRepository {
+  func semanticSearch(searchTerm: String) async {
+    if searchTerm.isEmpty {
+      notes = allNotes
+    }
+    else {
+      let documentIds = await performQuery(searchTerm: searchTerm)
+      self.notes = documentIds.compactMap { documentId in
+        notes.first {$0.id == documentId }
+      }
     }
   }
+
+  private func performQuery(searchTerm: String) async -> [String] {
+    do {
+      let queryRequest = QueryRequest(query: searchTerm, limit: 5)
+      let result = try await vectorSearchQueryCallable(queryRequest)
+      return result.ids
+    }
+    catch {
+      print(error.localizedDescription)
+      return ["(No answer - something went wrong...)"]
+    }
+  }
+
 }

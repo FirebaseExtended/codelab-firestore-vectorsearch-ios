@@ -15,6 +15,7 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseAuth
 
 @main
 struct NotesApp: App {
@@ -22,6 +23,7 @@ struct NotesApp: App {
   
   init() {
     FirebaseApp.configure()
+    Auth.auth().signInAnonymously()
     notesRepository.subscribe()
   }
   
