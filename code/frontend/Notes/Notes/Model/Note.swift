@@ -19,4 +19,5 @@ import FirebaseFirestore
 struct Note: Identifiable, Hashable, Codable {
   @DocumentID var id: String?
   var text: String = ""
+  var userId: String?
 }

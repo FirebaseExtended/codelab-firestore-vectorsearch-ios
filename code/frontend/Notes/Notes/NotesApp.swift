@@ -23,7 +23,10 @@ struct NotesApp: App {
   
   init() {
     FirebaseApp.configure()
+    
+    notesRepository.registerAuthChangeListener()
     Auth.auth().signInAnonymously()
+
     notesRepository.subscribe()
   }
   

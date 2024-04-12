@@ -17,10 +17,19 @@ import Foundation
 import Observation
 import FirebaseFirestore
 import FirebaseFunctions
+import FirebaseAuth
 
 private struct QueryRequest: Codable {
   var query: String
   var limit: Int?
+  var prefilters: [QueryFilter]?
+}
+
+private struct QueryFilter: Codable {
+  var field: String
+  var `operator`: String
+  var value: String
+
 }
 
 private struct QueryResponse: Codable {
@@ -43,11 +52,14 @@ private struct QueryResponse: Codable {
 
   @ObservationIgnored
   private var listenerRegistration: ListenerRegistration?
+
+  private var user: User?
 }
 
 extension NotesRepository {
   func createNote() async throws -> Note {
     var note = Note()
+    note.userId = user?.uid
 
     let ref = try? db.collection(notesCollection).addDocument(from: note)
     note.id = ref?.documentID
@@ -69,7 +81,12 @@ extension NotesRepository {
 
   func subscribe() {
     if listenerRegistration == nil {
-      listenerRegistration = db.collection(notesCollection)
+      var query: Query = db.collection(notesCollection)
+      if let uid = user?.uid {
+        query = query.whereField("userId", isEqualTo: uid)
+      }
+
+      listenerRegistration = query
         .addSnapshotListener { [weak self] querySnapshot, error in
           guard let documents = querySnapshot?.documents else { return }
           self?.allNotes = documents.compactMap { queryDocumentSnapshot in
@@ -103,7 +120,16 @@ extension NotesRepository {
 
   private func performQuery(searchTerm: String) async -> [String] {
     do {
-      let queryRequest = QueryRequest(query: searchTerm, limit: 5)
+      let prefilters: [QueryFilter] = if let uid = user?.uid {
+        [QueryFilter(field: "userId", operator: "==", value: uid)]
+      }
+      else {
+        []
+      }
+      let queryRequest = QueryRequest(query: searchTerm,
+                                      limit: 2,
+                                      prefilters: prefilters)
+      
       let result = try await vectorSearchQueryCallable(queryRequest)
       return result.ids
     }
@@ -112,5 +138,14 @@ extension NotesRepository {
       return ["(No answer - something went wrong...)"]
     }
   }
+}
 
+extension NotesRepository {
+  func registerAuthChangeListener() {
+    Auth.auth().addStateDidChangeListener { auth, user in
+      self.user = user
+      self.unsubscribe()
+      self.subscribe()
+    }
+  }
 }
