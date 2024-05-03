@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		883DB8392BDA791E003E878A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 883DB8382BDA791E003E878A /* GoogleService-Info.plist */; };
 		88CCEAB52BC408A600829826 /* NotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCEAB42BC408A600829826 /* NotesApp.swift */; };
 		88CCEAB92BC408A800829826 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88CCEAB82BC408A800829826 /* Assets.xcassets */; };
 		88CCEABC2BC408A800829826 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88CCEABB2BC408A800829826 /* Preview Assets.xcassets */; };
@@ -17,7 +18,6 @@
 		88CCEAD12BC55F0700829826 /* NotesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCEAD02BC55F0700829826 /* NotesRepository.swift */; };
 		88CCEAD32BC563AF00829826 /* Note+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCEAD22BC563AF00829826 /* Note+Utilities.swift */; };
 		88CCEAD62BC56EF400829826 /* NoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCEAD52BC56EF400829826 /* NoteRowView.swift */; };
-		88CCEAD82BC5ADA800829826 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88CCEAD72BC5ADA800829826 /* GoogleService-Info.plist */; };
 		88CCEADB2BC5AE1600829826 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 88CCEADA2BC5AE1600829826 /* FirebaseAuth */; };
 		88CCEADD2BC5AE1600829826 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 88CCEADC2BC5AE1600829826 /* FirebaseFirestore */; };
 		88CCEADF2BC5AE1600829826 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 88CCEADE2BC5AE1600829826 /* FirebaseFunctions */; };
@@ -25,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		883DB8382BDA791E003E878A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		88CCEAB12BC408A600829826 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88CCEAB42BC408A600829826 /* NotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesApp.swift; sourceTree = "<group>"; };
 		88CCEAB82BC408A800829826 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -36,7 +37,6 @@
 		88CCEAD02BC55F0700829826 /* NotesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesRepository.swift; sourceTree = "<group>"; };
 		88CCEAD22BC563AF00829826 /* Note+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+Utilities.swift"; sourceTree = "<group>"; };
 		88CCEAD52BC56EF400829826 /* NoteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRowView.swift; sourceTree = "<group>"; };
-		88CCEAD72BC5ADA800829826 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		88CCEAEF2BC937DE00829826 /* DebouncingTaskViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebouncingTaskViewModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,7 +80,7 @@
 				88CCEAC72BC40B4A00829826 /* Screens */,
 				88CCEAB42BC408A600829826 /* NotesApp.swift */,
 				88CCEAB82BC408A800829826 /* Assets.xcassets */,
-				88CCEAD72BC5ADA800829826 /* GoogleService-Info.plist */,
+				883DB8382BDA791E003E878A /* GoogleService-Info.plist */,
 				88CCEABA2BC408A800829826 /* Preview Content */,
 			);
 			path = Notes;
@@ -204,7 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88CCEABC2BC408A800829826 /* Preview Assets.xcassets in Resources */,
-				88CCEAD82BC5ADA800829826 /* GoogleService-Info.plist in Resources */,
+				883DB8392BDA791E003E878A /* GoogleService-Info.plist in Resources */,
 				88CCEAB92BC408A800829826 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
