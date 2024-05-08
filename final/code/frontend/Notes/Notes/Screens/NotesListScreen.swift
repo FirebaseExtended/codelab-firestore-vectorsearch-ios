@@ -48,7 +48,7 @@ extension NotesListScreen: View {
         }
       }
       .searchable(text: $searchTerm, prompt: "Search")
-      .task(id: searchTerm, nanoseconds: 600_000_000) {
+      .task(id: searchTerm, debounce: .milliseconds(600)) {
         await notesRepository.semanticSearch(searchTerm: searchTerm)
       }
       .navigationTitle("Notes")
