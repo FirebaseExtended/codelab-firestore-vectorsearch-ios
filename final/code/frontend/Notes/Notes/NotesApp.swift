@@ -17,22 +17,30 @@ import SwiftUI
 import FirebaseCore
 import FirebaseAuth
 
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+
+    return true
+  }
+}
+
 @main
 struct NotesApp: App {
-  @State var notesRepository = NotesRepository()
-  
-  init() {
-    FirebaseApp.configure()
-    
-    notesRepository.registerAuthChangeListener()
-    Auth.auth().signInAnonymously()
+  @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
-    notesRepository.subscribe()
-  }
+  @State var notesRepository = NotesRepository()
   
   var body: some Scene {
     WindowGroup {
       NotesListScreen()
+        .onAppear {
+          notesRepository.registerAuthChangeListener()
+          Auth.auth().signInAnonymously()
+
+          notesRepository.subscribe()
+        }
         .environment(notesRepository)
     }
   }
